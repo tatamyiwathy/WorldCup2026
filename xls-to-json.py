@@ -30,6 +30,10 @@ def load_table(file_path: Path) -> pd.DataFrame:
 INPUT_FILE = resolve_input_file()
 
 df = load_table(INPUT_FILE)
+if 'date' in df.columns:
+	df['date'] = pd.to_datetime(df['date']).dt.strftime('%Y-%m-%d')
+
+
 df.to_json(DATABASE_FILE, orient='records', force_ascii=False, indent=2)
 
 print('Columns:', ', '.join(df.columns))
